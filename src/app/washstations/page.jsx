@@ -67,7 +67,7 @@ const Washstation = () => {
                     <p className="text-blue-800 text-sm font-semibold uppercase tracking-wider">
                       Active
                     </p>
-                    <p className="text-blue-600 text-xl font-bold">
+                    <div className="text-blue-600 text-xl font-bold">
                       {e.is_active ? (
                         <p className="text-blue-600 text-xl font-bold">
                           Active
@@ -77,7 +77,7 @@ const Washstation = () => {
                           Inactive
                         </p>
                       )}
-                    </p>
+                    </div>
                   </div>
                 </div>
                 <EditWashstationDialog id={e.id} />
