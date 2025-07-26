@@ -6,6 +6,8 @@ import { toast } from "sonner";
 const Cars = create((set, get) => ({
   datac: [],
   dataId: [],
+  dataHisT: [],
+  dataHisA: [],
   funGetCars: async () => {
     try {
       let token = localStorage.getItem("access_token");
@@ -42,6 +44,7 @@ const Cars = create((set, get) => ({
           Authorization: `Bearer ${token}`,
         },
       });
+      get().funGetHistory();
       get().funGetCars();
       toast.success("Car Successfuly Added");
     } catch (error) {
@@ -57,6 +60,7 @@ const Cars = create((set, get) => ({
           Authorization: `Bearer ${token}`,
         },
       });
+      get().funGetHistory();
       get().funGetCars();
       toast.success("Car Successfuly edit");
     } catch (error) {
@@ -72,11 +76,28 @@ const Cars = create((set, get) => ({
           Authorization: `Bearer ${token}`,
         },
       });
+      get().funGetHistory();
       get().funGetCars();
       toast.success("Car Deleted");
     } catch (error) {
       console.error(error);
       toast.success("Something went wrong");
+    }
+  },
+  funGetHistory: async () => {
+    try {
+      let token = localStorage.getItem("access_token");
+      let { data } = await axios.get(`${API}/cars/totals/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(data.total_all);
+
+      set({ dataHisT: data.total_filtered, dataHisA: data.total_all });
+    } catch (error) {
+      console.error(error);
+      toast.error("Cars history Not Geting");
     }
   },
 }));

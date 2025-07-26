@@ -17,6 +17,7 @@ import Services from "@/stores/services/services";
 import Employees from "@/stores/employees/employees";
 import AddCars from "@/components/Cars Components/add cars/addCars";
 import EditCarsDialog from "@/components/Cars Components/edit cars/editCars";
+import History_car from "@/components/history_car/history_car";
 
 const About = () => {
   const { funGetCars, datac, funDelCar } = Cars();
@@ -58,7 +59,10 @@ const About = () => {
 
   return (
     <div className="my-5 bg-blue-600 w-[75%]">
-      <AddCars />
+      <div className="flex items-center gap-5">
+        <AddCars />
+        <History_car />
+      </div>
       <Table className="w-100% bg-blue-400">
         <TableCaption className="text-white">
           A list of your recent invoices.

@@ -1,15 +1,33 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/Group 4 (1).png";
 import Image from "next/image";
 
 const Side_bar = () => {
   const pathname = usePathname();
+  const [superAdmin, setSuperAdmin] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedAdmin = localStorage.getItem("super_admin");
+      setSuperAdmin(storedAdmin);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("super_admin");
+      window.location.href = "/login";
+    }
+  };
+
   return (
     <div className="w-[350px] rounded-xl p-6 bg-gradient-to-b from-[#00aaff] to-[#1e00ff] h-[97vh] my-3 left-4 sticky top-5 bottom-0">
-      <Image src={logo} alt="logo"/>
+      <Image src={logo} alt="logo" />
       <div className="my-5 flex flex-col gap-4">
         <Link href={"/"}>
           <button
@@ -56,14 +74,20 @@ const Side_bar = () => {
             Wash Stations
           </button>
         </Link>
+        {superAdmin === "admin@gmail.com" && (
+          <Link href={"/register"}>
+            <button
+              className={`text-white bg-[#015eff95] w-full rounded-xl py-2.5 active:bg-[#0400ff] ${
+                pathname == "/register" ? "bg-[#0400ff]" : ""
+              } cursor-pointer`}
+            >
+              Register
+            </button>
+          </Link>
+        )}
         <button
-          className={`text-white bg-[#015eff95] w-full rounded-xl py-2.5 active:bg-[#0400ff] ${
-            pathname == "/washstations" ? "bg-[#0400ff]" : ""
-          } cursor-pointer`}
-          onClick={() => {
-            localStorage.removeItem("access_token");
-            window.location = "login";
-          }}
+          className="text-white bg-[#015eff95] w-full rounded-xl py-2.5 active:bg-[#0400ff] cursor-pointer"
+          onClick={handleLogout}
         >
           Logout
         </button>

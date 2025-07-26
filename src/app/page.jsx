@@ -31,9 +31,13 @@ const Home = () => {
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <div className="bg-blue-50 rounded-2xl p-6 shadow-md">
-          <h3 className="text-2xl font-semibold text-blue-500 mb-4">
-            🚿 Wash Stations
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-semibold text-blue-500 mb-4">
+              🚿 Wash Stations
+            </h3>
+            <h1 className="font-bold text-blue-900 text-2xl">{data.length}</h1>
+          </div>
+
           <ul className="space-y-2">
             {data?.map((e) => (
               <li
@@ -47,9 +51,13 @@ const Home = () => {
         </div>
 
         <div className="bg-blue-50 rounded-2xl p-6 shadow-md">
-          <h3 className="text-2xl font-semibold text-blue-500 mb-4">
-            🛠️ Services
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-semibold text-blue-500 mb-4">
+              🛠️ Services
+            </h3>
+            <h1 className="font-bold text-blue-900 text-2xl">{datas.length}</h1>
+          </div>
+
           <ul className="space-y-2">
             {datas?.map((e) => (
               <li
@@ -63,9 +71,13 @@ const Home = () => {
         </div>
 
         <div className="bg-blue-50 rounded-2xl p-6 shadow-md">
-          <h3 className="text-2xl font-semibold text-blue-500 mb-4">
-            👨‍🔧 Employees
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-semibold text-blue-500 mb-4">
+              👨‍🔧 Employees
+            </h3>
+            <h1 className="font-bold text-blue-900 text-2xl">{datae.length}</h1>
+          </div>
+
           <ul className="space-y-2">
             {datae?.map((e) => (
               <li
@@ -79,7 +91,12 @@ const Home = () => {
         </div>
 
         <div className="bg-blue-50 rounded-2xl p-6 shadow-md">
-          <h3 className="text-2xl font-semibold text-blue-500 mb-4">🚗 Cars</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-semibold text-blue-500 mb-4">
+              🚗 Cars
+            </h3>
+            <h1 className="font-bold text-blue-900 text-2xl">{datac.length}</h1>
+          </div>
           <ul className="space-y-2">
             {datac?.map((e) => (
               <li
