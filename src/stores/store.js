@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/api/axiosInstance";
 import { toast } from "sonner";
 import { create } from "zustand";
 
@@ -14,7 +14,9 @@ const Login = create((set) => ({
     try {
       const res = await axios.post(`${API}/accounts/login/`, dataUser);
       const token = res.data.access;
+      const ref = res.data.refresh
       localStorage.setItem("access_token", token);
+      localStorage.setItem("refresh_token", ref);
       localStorage.setItem("super_admin", dataUser.email);
       set({ success: true });
     } catch (error) {
@@ -50,16 +52,12 @@ const Login = create((set) => ({
   },
   ConfirmToken: async (tokenConf) => {
     let token = localStorage.getItem("access_token");
-    try {
-      await axios.get(`${API}/accounts/confirm-email/${tokenConf}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      toast.success("Success register");
-    } catch (error) {
-      console.error(error);
-    }
+    await axios.get(`${API}/accounts/confirm-email/${tokenConf}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    toast.success("Success register");
   },
 }));
 

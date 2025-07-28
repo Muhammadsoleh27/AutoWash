@@ -1,19 +1,35 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Employees from "@/stores/employees/employees";
-import logoEmploy from "../../assets/Gemini_Generated_Image_uhxl8quhxl8quhxl.png"; // Assuming this is your placeholder image
+import logoEmploy from "../../assets/Gemini_Generated_Image_uhxl8quhxl8quhxl.png";
 import Image from "next/image";
 import Washstations from "@/stores/washstations/washstations";
 import AddEmployees from "@/components/employees components/add employees/addEmployees";
 import EditEmployeesDialog from "@/components/employees components/edit employees/editEmployees";
+import {
+  Search,
+  Users,
+  Phone,
+  MapPin,
+  Trash2,
+  Plus,
+  Filter,
+} from "lucide-react";
 
 const EmployeesPage = () => {
   const { funGetEmployees, datae, funDeleteEmployees } = Employees();
   const { funGetWash, data } = Washstations();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedWashStation, setSelectedWashStation] = useState("all");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    funGetEmployees();
-    funGetWash();
+    const loadData = async () => {
+      setIsLoading(true);
+      await Promise.all([funGetEmployees(), funGetWash()]);
+      setIsLoading(false);
+    };
+    loadData();
   }, []);
 
   // Helper function to get wash station name
@@ -22,94 +38,214 @@ const EmployeesPage = () => {
     return wash?.name || "Unknown";
   }
 
-  // --- Placeholder functions for button actions ---
-  const handleAddEmployee = () => {
-    console.log("Add New Employee button clicked!");
-    // Implement navigation to add employee page or open a modal
-  };
+  // Filter employees based on search and wash station
+  const filteredEmployees = datae.filter((employee) => {
+    const matchesSearch = employee.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesWashStation =
+      selectedWashStation === "all" || employee.wash_id === selectedWashStation;
+    return matchesSearch && matchesWashStation;
+  });
 
-  const handleEditEmployee = (employeeId) => {
-    console.log(`Edit Employee with ID: ${employeeId} clicked!`);
-    // Implement navigation to edit employee page or open a modal with employee data
-  };
-  // --- End Placeholder functions ---
+  // Get unique wash stations for filter dropdown
+  const washStations = data.map((wash) => ({ id: wash.id, name: wash.name }));
 
   return (
-    <div className="py-4 px-4 sm:px-6 lg:px-8 w-[75%]">
-      <div>
-        {/* Page Header: Title and Add Button */}
-        <div className="flex justify-between items-center mb-12">
-          <h1 className="text-4xl font-extrabold text-blue-900 drop-shadow-sm">
-            Our Valued Employees
+    <div className="min-h-screen w-[75%] py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mb-6 shadow-lg">
+            <Users className="w-10 h-10 text-white" />
+          </div>
+          <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-4">
+            Our Team
           </h1>
-          <AddEmployees />
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Meet the dedicated professionals who make our wash stations
+            exceptional
+          </p>
         </div>
 
-        {/* Employee Cards Container (Flexbox) */}
-        {datae.length > 0 ? (
-          <div className="flex flex-wrap justify-start gap-5">
-            {datae.map((e) => (
-              <div
-                key={e.id}
-                className="w-full sm:w-72 md:w-80 lg:w-80 xl:w-80
-                           bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out
-                           flex flex-col items-center p-6 border-t-4 border-blue-600"
-              >
-                {/* Employee Image */}
-                <Image
-                  src={logoEmploy} // Ensure this path is correct and accessible
-                  alt={`Profile picture of ${e.name}`}
-                  width={140} // Specify width for Next/Image optimization
-                  height={140} // Specify height for Next/Image optimization
-                  className="w-36 h-36 rounded-full object-cover ring-4 ring-blue-500 mb-6"
+        {/* Controls Section */}
+        <div className="bg-blue-100 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 mb-12">
+          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+            {/* Search Bar */}
+            <div className="flex gap-9">
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search employees..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                 />
-
-                {/* Employee Name */}
-                <div className="text-center mb-4">
-                  <h2 className="text-blue-900 text-3xl font-extrabold capitalize leading-tight">
-                    {e.name}
-                  </h2>
-                </div>
-
-                {/* Employee Details */}
-                <div className="w-full text-center space-y-4 mb-6">
-                  <div>
-                    <p className="text-blue-800 text-sm font-semibold uppercase tracking-wider">
-                      Phone Number
-                    </p>
-                    <p className="text-blue-600 text-xl font-bold">
-                      +992 {e.phone_number}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-blue-800 text-sm font-semibold uppercase tracking-wider">
-                      Wash Station
-                    </p>
-                    <p className="text-blue-600 text-xl font-bold">
-                      {GetWash(e.wash_id)}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Edit Button */}
-                <EditEmployeesDialog id={e.id} />
-                <button
-                  onClick={() => funDeleteEmployees(e.id)}
-                  className="cursor-pointer mt-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md
-                             transition-colors duration-200 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-                >
-                  Delete
-                </button>
               </div>
-            ))}
+
+              {/* Filter Dropdown */}
+              <div className="relative">
+                <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <select
+                  value={selectedWashStation}
+                  onChange={(e) => setSelectedWashStation(e.target.value)}
+                  className="pl-12 pr-8 py-3 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer"
+                >
+                  <option value="all">All Wash Stations</option>
+                  {washStations.map((station) => (
+                    <option key={station.id} value={station.id}>
+                      {station.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Add Employee Button */}
+            <div className="relative">
+              <AddEmployees />
+            </div>
+          </div>
+
+          {/* Stats Bar */}
+          <div className="flex items-center justify-center mt-6 pt-6 border-t border-gray-200">
+            <div className="flex items-center gap-2 text-gray-600">
+              <Users className="w-5 h-5" />
+              <span className="font-semibold">
+                {filteredEmployees.length} of {datae.length} employees
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Loading State */}
+        {isLoading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Users className="w-6 h-6 text-blue-600" />
+              </div>
+            </div>
           </div>
         ) : (
-          // Optional: Loading/Empty State
-          <div className="col-span-full text-center py-20 text-gray-500 text-xl">
-            Loading employees or no data available...
+          /* Employee Cards Grid */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {filteredEmployees.length > 0 ? (
+              filteredEmployees.map((employee, index) => (
+                <div
+                  key={employee.id}
+                  className="group relative bg-white/90 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 border border-gray-100 hover:border-blue-200"
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                    animation: !isLoading
+                      ? "fadeInUp 0.6s ease-out forwards"
+                      : "none",
+                  }}
+                >
+                  <div className="relative p-8">
+                    {/* Employee Avatar */}
+                    <div className="relative mb-6">
+                      <div className="absolute inset-0 bg-blue-50 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+                      <Image
+                        src={logoEmploy}
+                        alt={`Profile picture of ${employee.name}`}
+                        width={120}
+                        height={120}
+                        className="w-28 h-28 rounded-full object-cover mx-auto ring-3 ring-gray-200 group-hover:ring-blue-300 shadow-md transition-all duration-300"
+                      />
+                      <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+
+                    {/* Employee Name */}
+                    <div className="text-center mb-6">
+                      <h3 className="text-2xl font-bold text-gray-800 capitalize group-hover:text-blue-600 transition-colors duration-200">
+                        {employee.name}
+                      </h3>
+                    </div>
+
+                    {/* Employee Details */}
+                    <div className="space-y-4 mb-8">
+                      <div className="flex items-center gap-3 p-3 bg-gray-50/80 rounded-xl">
+                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                          <Phone className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-500 font-medium">
+                            Phone
+                          </p>
+                          <p className="text-gray-800 font-semibold">
+                            +992 {employee.phone_number}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 p-3 bg-gray-50/80 rounded-xl">
+                        <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                          <MapPin className="w-5 h-5 text-indigo-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-500 font-medium">
+                            Station
+                          </p>
+                          <p className="text-gray-800 font-semibold">
+                            {GetWash(employee.wash_id)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-3">
+                      <div className="flex-1">
+                        <EditEmployeesDialog id={employee.id} />
+                      </div>
+                      <button
+                        onClick={() => funDeleteEmployees(employee.id)}
+                        className="px-4 py-3 bg-red-50 hover:bg-red-500 text-red-600 hover:text-white rounded-xl transition-all duration-300 group/btn border border-red-200 hover:border-red-500"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              /* Empty State */
+              <div className="col-span-full max-w-md mx-auto flex flex-col items-center justify-center py-20 text-center">
+                <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                  <Users className="w-16 h-16 text-gray-400" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-600 mb-2">
+                  No employees found
+                </h3>
+                <p className="text-gray-500">
+                  {searchTerm || selectedWashStation !== "all"
+                    ? "Try adjusting your search criteria or filters"
+                    : "Start by adding your first employee to the system"}
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      {/* Custom CSS for animations */}
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>
   );
 };

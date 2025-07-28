@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/api/axiosInstance";
 import { create } from "zustand";
 const API = process.env.NEXT_PUBLIC_BASE_URL;
 import { toast } from "sonner";
