@@ -216,20 +216,6 @@ export default function CarWashLogin() {
                 <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-80 h-6 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent rounded-full blur-sm"></div>
               </div>
             </div>
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 grid grid-cols-3 gap-4 text-center z-20">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
-                <div className="text-cyan-400 mb-1 text-2xl">💧</div>
-                <p className="text-xs text-cyan-200">Eco-Friendly</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
-                <div className="text-blue-400 mb-1 text-2xl">⚡</div>
-                <p className="text-xs text-blue-200">Quick Service</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
-                <div className="text-purple-400 mb-1 text-2xl">✨</div>
-                <p className="text-xs text-purple-200">Premium Care</p>
-              </div>
-            </div>
           </div>
         </div>
         <div className="w-full lg:w-1/2 flex items-center justify-center p-6 relative">
