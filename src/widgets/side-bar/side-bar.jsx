@@ -166,7 +166,7 @@ const Side_bar = () => {
           </div>
 
           {/* Navigation Menu */}
-          <nav className="flex-1 space-y-3 ">
+          <nav className="flex-1 space-y-3">
             {navigationItems.map((item) => (
               <Link key={item.href} href={item.href}>
                 <div
@@ -254,10 +254,10 @@ const Side_bar = () => {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="#ffffff"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-crown-icon lucide-crown"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-crown-icon lucide-crown"
                       >
                         <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" />
                         <path d="M5 21h14" />
@@ -323,13 +323,13 @@ const Side_bar = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
-                    class="size-6 text-white"
+                    className="size-6 text-white"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
                     />
                   </svg>
