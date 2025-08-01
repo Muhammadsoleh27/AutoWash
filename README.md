@@ -1,4 +1,4 @@
-# 🚗💦 AutoWash
+# 🚗 AutoWash
 
 **AutoWash** is a modern web application built with **Next.js**, **TypeScript**, and **Tailwind CSS** that streamlines car wash service management. Designed for both car wash businesses and customers, AutoWash allows users to register vehicles, manage employees, and track service history with an intuitive interface.
 
