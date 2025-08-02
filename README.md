@@ -30,6 +30,6 @@
 | State Management  | Zustand                                  |
 | Hosting           | Vercel                                   |
 
-
+---
 
 
