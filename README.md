@@ -30,7 +30,4 @@
 | State Management  | Zustand                                  |
 | Hosting           | Vercel                                   |
 
----
-
-## 📁 Project Structure
 
