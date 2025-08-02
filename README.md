@@ -16,7 +16,7 @@
 - 👷 Employee registration and role-based assignment
 - 📅 Track service history and upcoming appointments
 - 🔒 Secure login with real-time validation
-- 🎨 Clean and consistent UI using Tailwind CSS and ShadCN
+- 🎨 Clean and consistent UI using Tailwind and ShadCN
 - ⚡ High-performance Next.js 
 
 ---
