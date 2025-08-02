@@ -6,7 +6,7 @@
 
 ## 🔗 Live Demo
 
-👉 [View Live Demo](https://auto-wash-tj.vercel.app)
+👉 [View Live Demo](http://92.255.79.122:3002/)
 
 ---
 
